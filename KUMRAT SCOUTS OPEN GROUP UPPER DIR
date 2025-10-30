@@ -1,0 +1,180 @@
+/* KUMRAT SCOUTS OPEN GROUP UPPER DIR Single-file React component (default export) ready for deployment to Vercel / Netlify.
+
+Notes for you:
+
+Replace /logo.png in the public folder with your Kumrat Scouts logo (Markhor Scout logo etc).
+
+The membership form uses Netlify Forms (no backend required). To use Netlify forms, deploy to Netlify and the form will collect submissions.
+
+For Formspree or email, replace the form action accordingly.
+
+This app is mobile-friendly, bilingual (English + Urdu), PWA-installable (basic manifest meta should be added separately), and uses Tailwind CSS classes.
+
+To deploy on Vercel: create a new project and push this file as src/App.jsx in a React app created with create-react-app or Vite. Add Tailwind configuration.
+
+
+Features included in this single file:
+
+Header with logo and bilingual toggle
+
+Home, About, Join Us (membership form), Documents, Gallery, Contact sections
+
+Fillable membership form (Netlify-ready) with validation
+
+Download links placeholders for bilingual PDFs
+
+Simple gallery grid
+
+Contact block with WhatsApp quick-link
+
+Footer with signatures placeholders */
+
+
+import React, { useState } from 'react'; import { motion } from 'framer-motion';
+
+export default function KumratScoutsApp(){ const [lang, setLang] = useState('en'); // 'en' or 'ur' const t = (en, ur) => (lang === 'en' ? en : ur);
+
+return ( <div className="min-h-screen bg-white text-gray-900 p-4 sm:p-6 lg:p-12"> <header className="max-w-4xl mx-auto flex items-center justify-between"> <div className="flex items-center gap-3"> <img src="/logo.png" alt="Kumrat Scouts Logo" className="w-16 h-16 object-contain rounded-full shadow" /> <div> <h1 className="text-xl sm:text-2xl font-bold">KUMRAT SCOUTS OPEN GROUP</h1> <p className="text-sm">Upper Dir • Khyber Pakhtunkhwa</p> </div> </div>
+
+<div className="flex items-center gap-3">
+      <nav className="hidden md:flex gap-4 text-sm">
+        <a href="#home">{t('Home','ہوم')}</a>
+        <a href="#about">{t('About','ہمارے بارے میں')}</a>
+        <a href="#join">{t('Join Us','شامل ہوں')}</a>
+        <a href="#docs">{t('Documents','ڈاکومنٹس')}</a>
+        <a href="#contact">{t('Contact','رابطہ')}</a>
+      </nav>
+
+      <div className="flex items-center gap-2">
+        <button onClick={() => setLang('en')} className={`px-2 py-1 rounded ${lang==='en' ? 'bg-gray-200' : 'bg-transparent'}`}>EN</button>
+        <button onClick={() => setLang('ur')} className={`px-2 py-1 rounded ${lang==='ur' ? 'bg-gray-200' : 'bg-transparent'}`}>اردو</button>
+      </div>
+    </div>
+  </header>
+
+  <main className="max-w-4xl mx-auto mt-8 space-y-12">
+    <section id="home" className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+      <div>
+        <motion.h2 initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} className="text-2xl sm:text-3xl font-extrabold">{t('Welcome to Kumrat Scouts Open Group','خوش آمدید — کمراٹ سکاؤٹس اوپن گروپ')}</motion.h2>
+        <p className="mt-4 text-gray-700">{t('We are a volunteer scout group from Upper Dir working to teach skills, leadership and outdoor ethics to youth.','ہم اپر ڈیر کا ایک خود رضاکار سکاؤٹس گروپ ہیں جو نوجوانوں کو ہنر، قیادت اور آؤٹ ڈور اخلاقیات سکھاتا ہے۔')}</p>
+
+        <div className="mt-6 flex gap-3">
+          <a href="#join" className="px-4 py-2 rounded shadow bg-gray-800 text-white">{t('Join Now','اب شامل ہوں')}</a>
+          <a href="#docs" className="px-4 py-2 rounded border">{t('Download Forms','فارمز ڈاؤن لوڈ کریں')}</a>
+        </div>
+      </div>
+
+      <div className="bg-gray-50 rounded-lg p-4">
+        <h3 className="font-semibold">{t('Quick Info','مختصر معلومات')}</h3>
+        <ul className="mt-3 text-sm space-y-2 text-gray-700">
+          <li>• {t('Location: Upper Dir, KPK','مقام: اپر ڈیر، خیبر پختونخوا')}</li>
+          <li>• {t('Age: 7-18 (for youth members)','عمر: 7-18 (نوجوان ممبران کیلئے)')}</li>
+          <li>• {t('Leaders: Volunteers from community','رہنما: کمیونٹی کے رضاکار')}</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="about" className="space-y-4">
+      <h3 className="text-xl font-bold">{t('About Us','ہمارے بارے میں')}</h3>
+      <p className="text-gray-700">{t('Kumrat Scouts Open Group was formed to provide scouting activities, training, and community service in Kumrat valley. We follow Scout laws and the spirit of service.','کمراٹ سکاؤٹس اوپن گروپ کمراٹ وادی میں سکاؤٹنگ سرگرمیاں، تربیت اور کمیونٹی سروس فراہم کرنے کے لیے قائم کیا گیا۔ ہم سکاؤٹ قوانین اور خدمت کے جذبے پر عمل کرتے ہیں۔')}</p>
+    </section>
+
+    <section id="join" className="space-y-4">
+      <h3 className="text-xl font-bold">{t('Join Us — Membership Form','ہم میں شامل ہوں — ممبرشپ فارم')}</h3>
+
+      <form name="membership" method="POST" data-netlify="true" className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-4 rounded">
+        <input type="hidden" name="form-name" value="membership" />
+
+        <label className="flex flex-col">
+          <span className="text-sm font-medium">{t('Full Name','پورا نام')}</span>
+          <input name="fullName" required className="mt-1 p-2 rounded border" />
+        </label>
+
+        <label className="flex flex-col">
+          <span className="text-sm font-medium">{t('Age','عمر')}</span>
+          <input name="age" type="number" min="5" max="100" required className="mt-1 p-2 rounded border" />
+        </label>
+
+        <label className="flex flex-col md:col-span-2">
+          <span className="text-sm font-medium">{t('Address','پتہ')}</span>
+          <input name="address" required className="mt-1 p-2 rounded border" />
+        </label>
+
+        <label className="flex flex-col">
+          <span className="text-sm font-medium">{t('Parent / Guardian Name','والد / سرپرست کا نام')}</span>
+          <input name="guardian" required className="mt-1 p-2 rounded border" />
+        </label>
+
+        <label className="flex flex-col">
+          <span className="text-sm font-medium">{t('Contact Number','رابطہ نمبر')}</span>
+          <input name="phone" type="tel" required className="mt-1 p-2 rounded border" />
+        </label>
+
+        <label className="flex flex-col md:col-span-2">
+          <span className="text-sm font-medium">{t('Upload Photo (optional)','تصویر اپ لوڈ کریں (اختیاری)')}</span>
+          <input name="photo" type="file" accept="image/*" className="mt-1" />
+        </label>
+
+        <label className="flex items-center gap-2 md:col-span-2">
+          <input type="checkbox" name="agree" required />
+          <span className="text-sm text-gray-700">{t('I agree to follow Scout rules and safety guidelines.','میں سکاؤٹ قوانین اور حفاظتی ہدایات پر عمل کرنے سے متفق ہوں۔')}</span>
+        </label>
+
+        <div className="md:col-span-2 flex gap-3">
+          <button type="submit" className="px-4 py-2 rounded bg-gray-800 text-white">{t('Submit','جمع کریں')}</button>
+          <button type="reset" className="px-4 py-2 rounded border">{t('Reset','ری سیٹ')}</button>
+        </div>
+      </form>
+
+      <p className="text-xs text-gray-500">{t('* After submission, district office will be notified (if connected). Replace form backend for email notifications.','* جمع کروانے کے بعد ضلع آفس کو اطلاع دی جا سکتی ہے (اگر کنیکٹڈ ہو). ای میل نوٹیفیکیشن کیلئے بیک اینڈ تبدیل کریں۔')}</p>
+    </section>
+
+    <section id="docs" className="space-y-4">
+      <h3 className="text-xl font-bold">{t('Documents & Forms','دستاویزات اور فارم')}</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a href="/forms/group-registration-en.pdf" className="p-4 border rounded">{t('Group Registration Form (English)','گروپ رجسٹریشن فارم (انگریزی)')}</a>
+        <a href="/forms/group-registration-ur.pdf" className="p-4 border rounded">{t('Group Registration Form (Urdu)','گروپ رجسٹریشن فارم (اردو)')}</a>
+        <a href="/forms/member-list-en.pdf" className="p-4 border rounded">{t('Member List (English)','ممبر لسٹ (انگریزی)')}</a>
+        <a href="/forms/finance-form.pdf" className="p-4 border rounded">{t('Financial Form','مالی فارم')}</a>
+      </div>
+      <p className="text-sm text-gray-600">{t('These are placeholders — I can generate fillable bilingual PDFs on request.','یہ پلےس ہولڈرز ہیں — میں بای لنگویل فل ایبل پی ڈی ایف بنا دے سکتا ہوں اگر آپ چاہیں۔')}</p>
+    </section>
+
+    <section id="gallery" className="space-y-4">
+      <h3 className="text-xl font-bold">{t('Gallery','گیلری')}</h3>
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <div className="h-28 bg-gray-100 rounded flex items-center justify-center">{t('Photo 1','تصویر 1')}</div>
+        <div className="h-28 bg-gray-100 rounded flex items-center justify-center">{t('Photo 2','تصویر 2')}</div>
+        <div className="h-28 bg-gray-100 rounded flex items-center justify-center">{t('Photo 3','تصویر 3')}</div>
+      </div>
+    </section>
+
+    <section id="contact" className="space-y-4">
+      <h3 className="text-xl font-bold">{t('Contact','رابطہ')}</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-gray-50 p-4 rounded">
+          <p className="text-sm">{t('Leader:','رہنما:')} <strong>Chairman / Group Leader</strong></p>
+          <p className="text-sm">{t('WhatsApp:','واٹس ایپ:')} <a href="https://wa.me/923001234567">+92 300 1234567</a></p>
+          <p className="text-sm">{t('Email:','ای میل:')} <a href="mailto:kumratscouts@example.com">kumratscouts@example.com</a></p>
+        </div>
+
+        <div className="bg-gray-50 p-4 rounded">
+          <p className="text-sm">{t('Office:','دفتر:')} {t('Kumrat Valley — meeting specific times by announcement.','کمراٹ وادی — ملاقات کا وقت اعلان کے ذریعے ہوگا۔')}</p>
+          <a className="inline-block mt-3 px-3 py-2 border rounded" href="mailto:kumratscouts@example.com?subject=Volunteer%20Enquiry">{t('Email Us','ہمیں ای میل کریں')}</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer className="max-w-4xl mx-auto mt-12 text-center text-sm text-gray-600">
+    <p>{t('© Kumrat Scouts Open Group Upper Dir','© کمراٹ سکاؤٹس اوپن گروپ اپر ڈیر')}</p>
+    <div className="mt-4 grid grid-cols-3 text-xs">
+      <div>{t('Chairman','چیئرمین')}</div>
+      <div>{t('Secretary','سیکرٹری')}</div>
+      <div>{t('Group Leader','گروپ لیڈر')}</div>
+    </div>
+  </footer>
+</div>
+
+); }
